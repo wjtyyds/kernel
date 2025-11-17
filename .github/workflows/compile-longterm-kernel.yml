@@ -82,10 +82,10 @@ on:
       kernel_sign:
         description: "Set the kernel custom signature"
         required: false
-        default: "-ophub"
+        default: "-wjtyyds"
         type: choice
         options:
-          - -ophub
+          - -wjtyyds
           - -happy-new-year
           - -dragon-boat-festival
           - -mid-autumn-festival
@@ -192,12 +192,12 @@ jobs:
         run: |
           # Create a docker mapping directory
           mkdir -p /builder/{compile-kernel/{kernel,output},ccache}
-          ln -sf /builder/compile-kernel/kernel /home/runner/work/_actions/ophub/amlogic-s9xxx-armbian/main/compile-kernel/kernel
-          ln -sf /builder/compile-kernel/output /home/runner/work/_actions/ophub/amlogic-s9xxx-armbian/main/compile-kernel/output
+          ln -sf /builder/compile-kernel/kernel /home/runner/work/_actions/wjtyyds/amlogic-s9xxx-armbian/main/compile-kernel/kernel
+          ln -sf /builder/compile-kernel/output /home/runner/work/_actions/wjtyyds/amlogic-s9xxx-armbian/main/compile-kernel/output
 
           # Pull the Armbian Docker image
           docker run -d --privileged \
-              --name armbian-ophub \
+              --name armbian-wjtyyds \
               -v /builder/compile-kernel:/opt/kernel/compile-kernel \
               -v /builder/ccache:/root/.ccache \
               -v /etc/localtime:/etc/localtime:ro \
@@ -217,7 +217,7 @@ jobs:
             kernel-longterm-${{ inputs.kernel_toolchain }}-${{ inputs.kernel_version }}-
 
       - name: Compile the kernel [ ${{ inputs.kernel_version }} ]
-        uses: ophub/amlogic-s9xxx-armbian@main
+        uses: wjtyyds/amlogic-s9xxx-armbian@main
         if: ${{ steps.pull.outputs.status }} == 'success' && !cancelled()
         with:
           build_target: kernel
