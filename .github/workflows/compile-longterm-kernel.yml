@@ -114,6 +114,23 @@ jobs:
     if: ${{ github.event.repository.owner.id }} == ${{ github.event.sender.id }}
 
     steps:
+    
+      # 🔥🔥🔥 添加的空间清理逻辑（只这一段）
+      - name: Free disk space
+        run: |
+          echo ">>> Cleaning preinstalled big components to free space"
+          sudo rm -rf /usr/share/dotnet || true
+          sudo rm -rf /usr/local/lib/android || true
+          sudo rm -rf /opt/ghc || true
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY" || true
+          echo ">>> Cleaning docker system"
+          sudo docker system prune -af || true
+          sudo rm -rf /var/lib/docker || true
+          echo ">>> Before cleanup:"
+          df -h
+          echo ">>> After cleanup:"
+          df -h
+    
       - name: Checkout
         uses: actions/checkout@v5
 
