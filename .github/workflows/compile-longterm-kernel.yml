@@ -205,8 +205,8 @@ jobs:
         run: |
           # Create a docker mapping directory
           mkdir -p /builder/{compile-kernel/{kernel,output},ccache}
-          ln -sf /builder/compile-kernel/kernel /home/runner/work/_actions/wjtyyds/amlogic-s9xxx-armbian/main/compile-kernel/kernel
-          ln -sf /builder/compile-kernel/output /home/runner/work/_actions/wjtyyds/amlogic-s9xxx-armbian/main/compile-kernel/output
+          ln -sf /builder/compile-kernel/kernel /home/runner/work/_actions/wjtyyds/amlogic-s9xxx-armbian/dev/compile-kernel/kernel
+          ln -sf /builder/compile-kernel/output /home/runner/work/_actions/wjtyyds/amlogic-s9xxx-armbian/dev/compile-kernel/output
 
           # Pull the Armbian Docker image
           docker run -d --privileged \
@@ -230,7 +230,7 @@ jobs:
             kernel-longterm-${{ inputs.kernel_toolchain }}-${{ inputs.kernel_version }}-
 
       - name: Compile the kernel [ ${{ inputs.kernel_version }} ]
-        uses: wjtyyds/amlogic-s9xxx-armbian@main
+        uses: wjtyyds/amlogic-s9xxx-armbian@dev
         if: ${{ steps.pull.outputs.status }} == 'success' && !cancelled()
         with:
           build_target: kernel
